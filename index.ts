@@ -1,22 +1,14 @@
-import { promises as fs } from "fs";
-import * as readline from "readline";
-import { dirname } from "path";
-
-// const readFile = async (inputPath: string) => {
-//   try {
-//     const file = await fs.readFile(inputPath, "utf-8");
-//     console.log(file);
-//   } catch (err) {
-//     console.log(err);
-//   }
-// };
-
 /* 
 reverse inputpath outputpath: inputpath にあるファイルを受け取り、outputpath に inputpath の内容を逆にした新しいファイルを作成します。
 copy inputpath outputpath: inputpath にあるファイルのコピーを作成し、outputpath として保存します。
 duplicate-contents inputpath n: inputpath にあるファイルの内容を読み込み、その内容を複製し、複製された内容を inputpath に n 回複製します。
 replace-string inputpath needle newstring: inputpath にあるファイルの内容から文字列 'needle' を検索し、'needle' の全てを 'newstring' に置き換えます。
 */
+
+import { promises as fs } from "fs";
+import * as readline from "readline";
+import { dirname } from "path";
+
 class FileManifulator {
   async reverse(inputPath: string, outputPath: string) {
     const contents = await fs.readFile(inputPath, "utf8");
@@ -32,7 +24,16 @@ class FileManifulator {
     }
   }
 
-  async copy(inputPath: string, outputPath: string) {}
+  async copy(inputPath: string, outputPath: string) {
+    const outputPathDir = dirname(outputPath);
+
+    try {
+      await fs.mkdir(outputPathDir, { recursive: true });
+      await fs.copyFile(inputPath, outputPath);
+    } catch (error) {
+      console.error(`Error writing file: ${error}`);
+    }
+  }
 
   async duplicateContents(inputPath: string, n: number) {}
 
