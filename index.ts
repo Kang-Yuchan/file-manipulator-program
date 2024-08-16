@@ -35,7 +35,16 @@ class FileManifulator {
     }
   }
 
-  async duplicateContents(inputPath: string, n: number) {}
+  async duplicateContents(inputPath: string, n: number) {
+    const contents = await fs.readFile(inputPath, "utf8");
+    const duplicateContents = contents.repeat(n);
+
+    try {
+      await fs.writeFile(inputPath, duplicateContents);
+    } catch (error) {
+      console.error(`Error writing file: ${error}`);
+    }
+  }
 
   async replaceString(inputpath: string, needle: string, newstring: string) {}
 
