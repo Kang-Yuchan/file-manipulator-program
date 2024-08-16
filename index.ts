@@ -46,7 +46,16 @@ class FileManifulator {
     }
   }
 
-  async replaceString(inputpath: string, needle: string, newstring: string) {}
+  async replaceString(inputPath: string, needle: string, newstring: string) {
+    const contents = await fs.readFile(inputPath, "utf8");
+    const replaceNeedleToNewString = contents.replace(needle, newstring);
+
+    try {
+      await fs.writeFile(inputPath, replaceNeedleToNewString);
+    } catch (error) {
+      console.error(`Error writing file: ${error}`);
+    }
+  }
 
   executeCommand(command: string, args: string[]) {
     try {
