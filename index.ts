@@ -58,43 +58,39 @@ class FileManifulator {
   }
 
   executeCommand(command: string, args: string[]) {
-    try {
-      switch (command) {
-        case "reverse":
-          if (args.length !== 2) {
-            throw new Error("reverse command requires exactly 2 arguments.");
-          }
-          this.reverse(args[0], args[1]);
-          break;
-        case "copy":
-          if (args.length !== 2) {
-            throw new Error("copy command requires exactly 2 arguments.");
-          }
-          this.copy(args[0], args[1]);
-          break;
-        case "duplicate-contents":
-          if (args.length !== 2) {
-            throw new Error(
-              "duplicate-contents command requires exactly 2 arguments."
-            );
-          }
-          const n = parseInt(args[1], 10);
-          if (isNaN(n)) throw new Error("n should be a number.");
-          this.duplicateContents(args[0], n);
-          break;
-        case "replace-string":
-          if (args.length !== 3) {
-            throw new Error(
-              "replace-string command requires exactly 3 arguments."
-            );
-          }
-          this.replaceString(args[0], args[1], args[2]);
-          break;
-        default:
-          throw new Error("Unknown command.");
-      }
-    } catch (error) {
-      console.error(error);
+    switch (command) {
+      case "reverse":
+        if (args.length !== 2) {
+          throw new Error("reverse command requires exactly 2 arguments.");
+        }
+        this.reverse(args[0], args[1]);
+        break;
+      case "copy":
+        if (args.length !== 2) {
+          throw new Error("copy command requires exactly 2 arguments.");
+        }
+        this.copy(args[0], args[1]);
+        break;
+      case "duplicate-contents":
+        if (args.length !== 2) {
+          throw new Error(
+            "duplicate-contents command requires exactly 2 arguments."
+          );
+        }
+        const n = parseInt(args[1], 10);
+        if (isNaN(n)) throw new Error("n should be a number.");
+        this.duplicateContents(args[0], n);
+        break;
+      case "replace-string":
+        if (args.length !== 3) {
+          throw new Error(
+            "replace-string command requires exactly 3 arguments."
+          );
+        }
+        this.replaceString(args[0], args[1], args[2]);
+        break;
+      default:
+        throw new Error("Unknown command.");
     }
   }
 }
